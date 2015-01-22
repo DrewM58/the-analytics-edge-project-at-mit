@@ -1,3 +1,11 @@
+---
+title: "Week4_SupremeCourt"
+author: "Huihui Duan"
+date: "January 21, 2015"
+output: html_document
+---
+
+```{r}
 # Week 4 - "Judge, Jury, and Classifier" Lecture
 
 # VIDEO 4
@@ -14,14 +22,14 @@ Train = subset(stevens, split==TRUE)
 Test = subset(stevens, split==FALSE)
 
 # Install rpart library
-install.packages("rpart")
+#install.packages("rpart")
 library(rpart)
-install.packages("rpart.plot")
+#install.packages("rpart.plot")
 library(rpart.plot)
 
 # CART model
 StevensTree = rpart(Reverse ~ Circuit + Issue + Petitioner 
-	+ Respondent + LowerCourt + Unconst, method="class", 
+  + Respondent + LowerCourt + Unconst, method="class", 
 	data = Train, control = rpart.control(minbucket=25))
 prp(StevensTree)
 
@@ -54,7 +62,7 @@ prp(StevensTree)
 # VIDEO 5 - Random Forests
 
 # Install randomForest package
-install.packages("randomForest")
+#install.packages("randomForest")
 library(randomForest)
 
 # Build random forest model
@@ -95,9 +103,9 @@ t = table(Test$Reverse, PredictForest)
 # VIDEO 6
 
 # Install cross-validation packages
-install.packages("caret")
+#install.packages("caret")
 library(caret)
-install.packages("e1071")
+#install.packages("e1071")
 library(e1071)
 
 # Define cross-validation experiment
@@ -122,3 +130,6 @@ PredictCV = predict(StevensTreeCV, newdata = Test, type = "class")
 table(Test$Reverse, PredictCV)
 (59+64)/(59+18+29+64)
 
+
+
+```
