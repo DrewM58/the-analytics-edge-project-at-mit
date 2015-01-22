@@ -1,0 +1,136 @@
+################################################################################
+# STATE DATA REVISITED
+setwd("D:/1 MOOC of Coursera edX Udacity/22 MITx 15.071x The Analytics Edge/Week 4 Trees")
+data(state)
+statedata = data.frame(state.x77)
+str(statedata)
+
+# PROBLEM 1.1 - LINEAR REGRESSION MODELS
+m1 <- lm(Life.Exp ~ ., data = statedata)
+summary(m1)
+
+# PROBLEM 1.2 - LINEAR REGRESSION MODELS
+pred <- predict(m1)
+SSE <- sum( (pred - statedata$Life.Exp)^2 )
+SSE
+
+
+# PROBLEM 1.3 - LINEAR REGRESSION MODELS
+m2 <- lm(Life.Exp ~ Population + Murder + Frost + HS.Grad, 
+	data = statedata)
+summary(m2)
+
+# PROBLEM 1.4 - LINEAR REGRESSION MODELS
+pred <- predict(m2)
+SSE <- sum( (pred - statedata$Life.Exp)^2 )
+SSE
+
+
+# PROBLEM 1.5 - LINEAR REGRESSION MODELS
+# 1 
+
+
+# PROBLEM 2.1 - CART MODELS
+CARTb = rpart(Life.Exp ~ . , data= statedata)
+library(rpart.plot)
+prp(CARTb)
+
+
+# PROBLEM 2.2 - CART MODELS
+pred <- predict(CARTb)
+SSE <- sum( (pred - statedata$Life.Exp)^2 )
+SSE
+
+# PROBLEM 2.3 - CART MODELS
+CARTb = rpart(Life.Exp ~ . , data= statedata, minbucket = 5)
+library(rpart.plot)
+prp(CARTb)
+
+# PROBLEM 2.4 - CART MODELS
+?rpart
+?rpart.control
+# 2
+
+
+
+# PROBLEM 2.5 - CART MODELS
+pred <- predict(CARTb)
+SSE <- sum( (pred - statedata$Life.Exp)^2 )
+SSE
+
+
+# PROBLEM 2.6 - CART MODELS  
+CARTb = rpart(Life.Exp ~ Area , data= statedata, minbucket = 1)
+prp(CARTb)
+pred <- predict(CARTb)
+SSE <- sum( (pred - statedata$Life.Exp)^2 )
+SSE
+
+
+# PROBLEM 2.7 - CART MODELS
+# 2
+
+
+# PROBLEM 3.1 - CROSS-VALIDATION
+library(caret)
+set.seed(111)
+
+# Define cross-validation experiment
+fitControl = trainControl( method = "cv", number = 10 )
+cartGrid = expand.grid( .cp = (1:50)*0.01) 
+
+# Perform the cross validation
+train(Life.Exp ~ ., data = statedata, method = "rpart", 
+	trControl = fitControl, tuneGrid = cartGrid )
+
+
+
+# PROBLEM 3.2 - CROSS-VALIDATION
+# Create a new CART model
+statedataTreeCV = rpart(Life.Exp ~ ., data = statedata,control=rpart.control(cp = 0.12))
+prp(statedataTreeCV)
+
+
+# PROBLEM 3.3 - CROSS-VALIDATION
+PredictCV = predict(statedataTreeCV)
+SSE <- sum( (PredictCV - statedata$Life.Exp)^2 )
+SSE
+
+
+# PROBLEM 3.4 - CROSS-VALIDATION
+# 3 with cross validation, we can reduce error in test data
+
+
+# PROBLEM 3.5 - CROSS-VALIDATION
+set.seed(111)
+train(Life.Exp ~ Area, data = statedata, method = "rpart", 
+	trControl = fitControl, tuneGrid = cartGrid )
+# Create a new CART model
+statedataNTreeCV = rpart(Life.Exp ~ Area, 
+	data = statedata,control=rpart.control(cp = 0.02))
+prp(statedataNTreeCV)
+
+
+# PROBLEM 3.6 - CROSS-VALIDATION
+prp(statedataNTreeCV)
+
+
+# PROBLEM 3.7 - CROSS-VALIDATION
+PredictNCV = predict(statedataNTreeCV)
+SSEN <- sum( (PredictNCV - statedata$Life.Exp)^2 )
+SSEN
+# only 2 is correct, I was wrong. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
