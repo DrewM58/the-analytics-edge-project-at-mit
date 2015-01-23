@@ -1,6 +1,6 @@
 ################################################################################
 # STATE DATA REVISITED
-setwd("D:/1 MOOC of Coursera edX Udacity/22 MITx 15.071x The Analytics Edge/Week 4 Trees")
+
 data(state)
 statedata = data.frame(state.x77)
 str(statedata)
@@ -31,6 +31,7 @@ SSE
 
 
 # PROBLEM 2.1 - CART MODELS
+library(rpart)
 CARTb = rpart(Life.Exp ~ . , data= statedata)
 library(rpart.plot)
 prp(CARTb)

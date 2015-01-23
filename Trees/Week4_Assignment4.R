@@ -1,5 +1,5 @@
 # PREDICTING EARNINGS FROM CENSUS DATA
-setwd("/Users/huihuiduan/1_MOOC_of_Coursera_edX_Udacity/22 MITx 15.071x The Analytics Edge/Week 4 Trees")
+
 census <- read.csv("census.csv")
 str(census)
 # PROBLEM 1.1 - A LOGISTIC REGRESSION MODEL
